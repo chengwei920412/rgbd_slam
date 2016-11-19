@@ -1,42 +1,12 @@
-cmake_minimum_required(VERSION 2.8.3)
-project(rgbd_slam)
+CMAKE_MINIMUM_REQUIRED( VERSION 2.8 )
+PROJECT( slam )
 
-## Find catkin macros and libraries
-## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS
-  cv_bridge
-  image_transport
-  message_filters
-  roscpp
-  rospy
-  sensor_msgs
-  std_msgs
-  pcl_conversions
-  pcl_ros roscpp
-  sensor_msgs
-)
+SET(CMAKE_CXX_COMPILER "g++")
+SET( CMAKE_BUILD_TYPE Debug  )
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
+INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/include )
+LINK_DIRECTORIES( ${PROJECT_SOURCE_DIR}/lib)
 
-catkin_package(
-)
-
-###########
-## Build ##
-###########
-
-include_directories(
-  include ${catkin_INCLUDE_DIRS}
-)
-
-
-
-
-## Declare a C++ executable
-add_executable(generatePointCloud src/generatePointCloud.cpp src/slamBase.cpp)
-add_executable(detect_features src/detect_features.cpp)
-
-
-## Specify libraries to link a library or executable target against
-target_link_libraries(detect_features ${catkin_LIBRARIES})
-target_link_libraries(generatePointCloud ${catkin_LIBRARIES})
+ADD_SUBDIRECTORY( ${PROJECT_SOURCE_DIR}/src )
